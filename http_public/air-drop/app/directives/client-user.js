@@ -4,7 +4,7 @@
 	node, this one is featured at the bottom of the console.
 
 */
-angular.module('AirDrop').directive('clientUser', function() {
+angular.module('OrbitalDrop').directive('clientUser', function() {
 
 	return {
 		restrict: 'E',
@@ -12,7 +12,7 @@ angular.module('AirDrop').directive('clientUser', function() {
 		scope:false,
 		controller: function(){},
 		link: function( scope, element, attributes ){},
-		templateUrl: '/air-drop/app/templates/client-user.tpl.html'
+		templateUrl: '/orbital-drop/app/templates/client-user.tpl.html'
 	}
 
 });

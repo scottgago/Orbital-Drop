@@ -1,18 +1,13 @@
 // instantiate socket.io
 var socket = io();
-angular.module('AirDrop.console', [])
+angular.module('OrbitalDrop.console', [])
 
 .controller('ConsoleController', function ($scope, state) {
 
-  /*
-  All logic resides in controller because it's angular best practice
-  Definition of controller from google:
-    con·trol·ler
-    kənˈtrōlər/Submit
-    a person or thing that directs or regulates something.
-  */
-
   $scope.chatRoom = []
+  $scope.users;
+  $scope.client;
+
   $.get('/api/user_profiles',function(response){
       var userId = response.id;
 
@@ -27,9 +22,10 @@ angular.module('AirDrop.console', [])
       
     // change users object format into frontend object format
     var ping = document.getElementById("ping");
-    ping.play();
+        ping.play();
 
     var angularUsers = {};
+
     for(var key in users){
       var user = users[key];
       // only one file for now, integrate with rex
@@ -42,8 +38,8 @@ angular.module('AirDrop.console', [])
       }
     }
     $scope.users = angularUsers;
-    // angular stupid rerender when new data hack
-    $scope.$apply();
+    
+    $scope.$apply();// angular stupid rerender when new data hack
 
   })
 
@@ -57,12 +53,13 @@ angular.module('AirDrop.console', [])
       var senderUserId = response.senderUserId
       var filename = response.filename
       
-      /*** user will choose accept or reject.  
-      1. A decision will be emitted
-      2. Accept will cause a forced get request. Reject will send a delete 
-         request for file.
-      ***/
-      // temporarily true, let user decide
+      /**
+
+        user will choose accept or reject.  
+        1. A decision will be emitted
+        2. Accept will cause a forced get request. Reject will send a delete 
+           request for file.
+      */
       if (confirm('We have a special package for you... Do you want it...')) {
         window.open('/files/download');
       } else {
@@ -74,82 +71,15 @@ angular.module('AirDrop.console', [])
             }
         });
       }
-      
-      
-      // socket.emit('transferChoice',{
-      //                 senderUserId:senderUserId,
-      //                 choice:choice
-      //             })
 
   })
 
-  $scope.users = {
-  					// "o21ij34o1ij": {
-       //        id: 'o21ij34o1ij',
-       //        username: 'Rex Kelly', 
-  					// 	packages:[ 
-  					// 				{thumb:'apple.jpg'}, 
-  					// 				{thumb:'apple.jpg'}, 
-  					// 				{thumb:'apple.jpg'}
-  					// 	]
-  					// },
-  					// "o212w0k201ij": {	
-       //        id: 'o212w0k201ij',
-       //        username: 'Rex Kelly', 
-  					// 	packages:[ 
-  					// 				{thumb:'apple.jpg'}, 
-  					// 				{thumb:'apple.jpg'}, 
-  					// 				{thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}
-  					// 	]
-  					// },
-  					// "o23wqei3o1ij": {	
-       //        id: 'o23wqei3o1ij',
-       //        username: 'Rex Kelly', 
-  					// 	packages:[ 
-  					// 				{thumb:'apple.jpg'}, 
-  					// 				{thumb:'apple.jpg'}, 
-  					// 				{thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'},
-       //              {thumb:'apple.jpg'},
-       //              {thumb:'apple.jpg'}, 
-       //              {thumb:'apple.jpg'}
-  					// 	]
-  					// }
-  				}
-
-
-    $scope.addConnection = function( connection ){
-      $scope.users[connection.id] = connection;
-    }
-
-    $scope.closeConnection = function( event ){
-      // var $el = $('#' + connection.id);
-      //     $el.addClass('closed');
-      //     setTimeout(function(){
-      //       delete $scope.users[connection.id];
-      //       $el.remove();
-      //     },100);
-    }
 
     $scope.sendMessage = function(message){
-
-
       var messageObj = {
         user: state.user,
         message : message
       } 
-
-      console.log(message)
-
-      // $scope.chatRoom.push(messageObj)
       socket.emit('sendChatMessage', messageObj)
     }
 })

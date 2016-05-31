@@ -5,7 +5,7 @@
 	font icon.
 
 */
-angular.module('AirDrop').directive('menuButton', function() {
+angular.module('OrbitalDrop').directive('menuButton', function() {
 	return {
 		restrict: 'E',
 		replace: true,

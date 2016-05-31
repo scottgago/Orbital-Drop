@@ -1,5 +1,5 @@
-angular.module('AirDrop', [
-  'AirDrop.console',
+angular.module('OrbitalDrop', [
+  'OrbitalDrop.console',
   'ngRoute'
 ])
 .config(function($routeProvider, $httpProvider) {

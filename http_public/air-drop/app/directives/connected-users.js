@@ -5,7 +5,7 @@
 	network.
 
 */
-angular.module('AirDrop').directive('connectedUsers', function() {
+angular.module('OrbitalDrop').directive('connectedUsers', function() {
 
 	return {
 		restrict: 'E',
@@ -17,7 +17,7 @@ angular.module('AirDrop').directive('connectedUsers', function() {
 			}
 		},
 		link: function( scope, element, attributes ){},
-		templateUrl: '/air-drop/app/templates/connected-users.tpl.html'
+		templateUrl: '/orbital-drop/app/templates/connected-users.tpl.html'
 	}
 
 });

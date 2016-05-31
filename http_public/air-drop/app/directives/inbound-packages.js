@@ -5,7 +5,7 @@
 	network
 
 */
-angular.module('AirDrop').directive('inboundPackages', function() {
+angular.module('OrbitalDrop').directive('inboundPackages', function() {
 
 	return {
 		restrict: 'E',
@@ -14,7 +14,7 @@ angular.module('AirDrop').directive('inboundPackages', function() {
 		link:function(scope, element,attr){
 			$(element).fadeIn(scope.$index*100);
 		},
-		templateUrl: '/air-drop/app/templates/inbound-packages.tpl.html',
+		templateUrl: '/orbital-drop/app/templates/inbound-packages.tpl.html',
 
 	}
 });
