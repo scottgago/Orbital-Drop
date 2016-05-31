@@ -4,6 +4,19 @@ angular.module('AirDrop.console', [])
 
 .controller('ConsoleController', function ($scope, state, stateMethods) {
 
+  /*
+  All logic resides in controller because it's angular best practice
+  Definition of controller from google:
+    con·trol·ler
+    kənˈtrōlər/Submit
+    a person or thing that directs or regulates something.
+  */
+
+  /*
+    http://stackoverflow.com/questions/31454488/angularjs-why-not-write-logic-in-controller
+    ^Why you're wrong
+  */
+
   $scope.chatRoom = []
   $.get('/api/user_profiles',function(response){
       var userId = response.id;
@@ -75,33 +88,33 @@ angular.module('AirDrop.console', [])
   })
 
   $scope.users = {
-            // "o21ij34o1ij": {
+  					// "o21ij34o1ij": {
        //        id: 'o21ij34o1ij',
        //        username: 'Rex Kelly', 
-            //  packages:[ 
-            //        {thumb:'apple.jpg'}, 
-            //        {thumb:'apple.jpg'}, 
-            //        {thumb:'apple.jpg'}
-            //  ]
-            // },
-            // "o212w0k201ij": {  
+  					// 	packages:[ 
+  					// 				{thumb:'apple.jpg'}, 
+  					// 				{thumb:'apple.jpg'}, 
+  					// 				{thumb:'apple.jpg'}
+  					// 	]
+  					// },
+  					// "o212w0k201ij": {	
        //        id: 'o212w0k201ij',
        //        username: 'Rex Kelly', 
-            //  packages:[ 
-            //        {thumb:'apple.jpg'}, 
-            //        {thumb:'apple.jpg'}, 
-            //        {thumb:'apple.jpg'}, 
+  					// 	packages:[ 
+  					// 				{thumb:'apple.jpg'}, 
+  					// 				{thumb:'apple.jpg'}, 
+  					// 				{thumb:'apple.jpg'}, 
        //              {thumb:'apple.jpg'}, 
        //              {thumb:'apple.jpg'}
-            //  ]
-            // },
-            // "o23wqei3o1ij": {  
+  					// 	]
+  					// },
+  					// "o23wqei3o1ij": {	
        //        id: 'o23wqei3o1ij',
        //        username: 'Rex Kelly', 
-            //  packages:[ 
-            //        {thumb:'apple.jpg'}, 
-            //        {thumb:'apple.jpg'}, 
-            //        {thumb:'apple.jpg'}, 
+  					// 	packages:[ 
+  					// 				{thumb:'apple.jpg'}, 
+  					// 				{thumb:'apple.jpg'}, 
+  					// 				{thumb:'apple.jpg'}, 
        //              {thumb:'apple.jpg'}, 
        //              {thumb:'apple.jpg'}, 
        //              {thumb:'apple.jpg'}, 
@@ -112,9 +125,9 @@ angular.module('AirDrop.console', [])
        //              {thumb:'apple.jpg'},
        //              {thumb:'apple.jpg'}, 
        //              {thumb:'apple.jpg'}
-            //  ]
-            // }
-          }
+  					// 	]
+  					// }
+  				}
 
 
     $scope.addConnection = function( connection ){
