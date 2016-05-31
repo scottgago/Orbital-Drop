@@ -1,3 +1,2 @@
-var users = {}
-
+const    users = {}
 module.exports = users;

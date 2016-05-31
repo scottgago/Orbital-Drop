@@ -1,3 +1,2 @@
-var chatMessages = []
-
-module.exports = chatMessages
+const chatMessages = []
+module.exports     = chatMessages
