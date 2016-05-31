@@ -6,7 +6,7 @@ require('../config/passport.js')(passport);
 
 module.exports = function(app, express) {
   
-  app.use(session(config.secret)
+  app.use(session({'secret': "thesecretkeyofdooomlololol"})
   app.use(passport.initialize());
   app.use(passport.session());
 
