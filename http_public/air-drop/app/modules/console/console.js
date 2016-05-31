@@ -2,7 +2,7 @@
 var socket = io();
 angular.module('AirDrop.console', [])
 
-.controller('ConsoleController', function ($scope, state) {
+.controller('ConsoleController', function ($scope, state, stateMethods) {
 
   /*
   All logic resides in controller because it's angular best practice
@@ -134,44 +134,77 @@ angular.module('AirDrop.console', [])
       //     },100);
     }
 
-    $scope.sendMessage = function(message){
-
-
-      var messageObj = {
-        user: state.user,
-        message : message
-      } 
-
-      console.log(state.user)
-
-      // $scope.chatRoom.push(messageObj)
-      socket.emit('sendChatMessage', messageObj)
-    }
-
-    $scope.toggleChatBox = function(){
-      console.log(state.user, "inChatBox")
-      var status = false
-      var toggle = document.getElementsByClassName("panel-body panel-footer")
-      if(status){
-        status = false
-      }
-      if(!status){
-        status = true
-      }
-      if(status){
-        toggle.display = "block"
-      }
-      if(!status){
-        toggle.display = "none"
-      }
-    }
-
+    $scope.sendMessage = stateMethods.sendMessage
+    $scope.toggleChatBox = stateMethods.toggleChatBox
+    state.chat.showStatus = false
 
 })
 .factory('state', function(){
   return {
     chat : [],
-    user: {},
+    user: {}
+  }
+})
+.factory('stateMethods', function(state){
 
+  return {
+    toggleChatBox : function(){
+
+    var toggleBody = document.getElementsByClassName("panel-body")
+    var toggleFooter = document.getElementsByClassName("panel-footer")
+    var toggleHeader = document.getElementsByClassName("container-chat")
+    var glyph = document.getElementById("expand")
+    console.log(glyph)
+
+      if(state.chat.showStatus){
+        state.chat.showStatus = false
+      } else {
+        state.chat.showStatus = true
+      }
+      if(state.chat.showStatus){
+        toggleBody[0].style.display = "block"
+        toggleFooter[0].style.display = "block"
+        toggleHeader[0].style.width = "100%"
+        glyph.className = "glyphicon glyphicon-chevron-down"
+      }
+      if(!state.chat.showStatus){
+        toggleBody[0].style.display = "none"
+        toggleFooter[0].style.display = "none"
+        toggleHeader[0].style.width = "50%"
+        glyph.className = "glyphicon glyphicon-chevron-up"
+      }
+    },
+    sendMessage : function(message){
+
+      var timeStamp = (function () {
+        // Create a date object with the current time
+        var now = new Date();
+        // Create an array with the current month, day and time
+        var date = [ now.getMonth() + 1, now.getDate(), now.getFullYear() ];
+        // Create an array with the current hour, minute and second
+        var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+        // Determine AM or PM suffix based on the hour
+        var suffix = ( time[0] < 12 ) ? "AM" : "PM";
+        // Convert hour from military time
+        time[0] = ( time[0] < 12 ) ? time[0] : time[0] - 12;
+        // If hour is 0, set it to 12
+        time[0] = time[0] || 12;
+        // If seconds and minutes are less than 10, add a zero
+        for ( var i = 1; i < 3; i++ ) {
+          if ( time[i] < 10 ) {
+            time[i] = "0" + time[i];
+          }
+        }
+        // Return the formatted string
+        return date.join("/") + " " + time.join(":") + " " + suffix;
+      })()
+
+      var messageObj = {
+        user: state.user,
+        message : message,
+        created_at: timeStamp
+      } 
+      socket.emit('sendChatMessage', messageObj)
+    }
   }
 })
